@@ -21,6 +21,10 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  //alttaki satiri ekleyince Image olarak cagirdiklarimizin sorunu cozuldu
+  images:{
+    domains: ['cdn.weatherapi.com']
+  }
 }
 
 module.exports = nextConfig
