@@ -10,7 +10,7 @@ export default function Home() {
 
 const getWeather = async() => {
   const api_key = 'c2a39762b03a45b397f51031230407'
-  const api_url = 'http://api.weatherapi.com/v1/current.json?key=' + api_key + '&q=' + location
+  const api_url = 'https://api.weatherapi.com/v1/current.json?key=' + api_key + '&q=' + location
 
   if(location){
     try{
