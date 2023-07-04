@@ -61,14 +61,14 @@ const getWeather = async() => {
 
 
   return (
-    <div className='h-screen w-screen bg-gradient-to-b from-yellow-100 to-rose-300 flex flex-col items-center justify-center gap-10'>
+    <div className='h-screen w-full bg-gradient-to-b from-yellow-100 to-rose-300 flex flex-col items-center justify-center gap-10'>
       <div className='flex flex-col items-center gap-2'>
         <Image src={logo}  className="w-28 flex" alt="logo" />
         {/* <div className='text-xl tracking-wider text-gray-800 font-pacifico font-bold'>Weathery</div> */}
       </div>
       
       <input
-      className='shadow-lg shadow-gray-600/50 rounded-xl transform w-[40em] p-4 placeholder:text-xl'
+      className='shadow-lg shadow-gray-600/50 rounded-xl transform lg:w-[40em] w-[80vw] p-4 lg:placeholder:text-xl'
       type='text'
       id='location'
       value={location}
@@ -77,7 +77,7 @@ const getWeather = async() => {
       />
 
       <button
-      className='bg-indigo-600 px-12 py-4 rounded-xl hover:bg-indigo-400 text-xl font-bold tracking-wider text-white '
+      className='bg-indigo-600 px-12 py-4 rounded-xl hover:bg-indigo-400 lg:text-xl font-bold tracking-wider text-white '
       onClick={getWeather}>
         SEARCH
       </button>
