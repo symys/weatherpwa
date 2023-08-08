@@ -1,13 +1,17 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import React from "react";
 import { useState } from "react";
-import LandingPage from "./landingpage";
+import Image from "next/image";
 import logo from "../public/sunny.png";
+import { useSelector, useDispatch } from "react-redux";
+import { setLocation } from "../reduxfolder/features/location-slice";
 
-const inter = Inter({ subsets: ["latin"] });
+function Landingpage() {
+  const [location, changeLocation] = useState("");
 
-export default function Home() {
-  const [location, setLocation] = useState("");
+  const dispatch = useDispatch();
+  const locationState = useSelector((state) => state.currentLocation);
+  console.log("hey" + JSON.stringify(locationState));
+
   const [weather, setWeather] = useState("");
 
   const getWeather = async () => {
@@ -23,11 +27,11 @@ export default function Home() {
         const res = await fetch(api_url).then((data) => data.json());
 
         if (res) {
-          console.log(res);
+          // console.log(res)
           const img = res.current.condition.icon;
           const imgURL = "https:" + img;
 
-          console.log(imgURL);
+          // console.log(imgURL)
           const api_data = {
             country: res.location.country,
             city: res.location.name,
@@ -77,6 +81,7 @@ export default function Home() {
               </div>
             </>
           );
+          dispatch(setLocation(api_data));
         }
       } catch (err) {
         console.log(err);
@@ -86,17 +91,17 @@ export default function Home() {
 
   return (
     <div className="h-screen w-full bg-gradient-to-b from-yellow-100 to-rose-300 flex flex-col items-center justify-center gap-10">
-      {/*<div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-2">
         <Image src={logo} className="w-28 flex" alt="logo" />
-         <div className='text-xl tracking-wider text-gray-800 font-pacifico font-bold'>Weathery</div> 
-      </div>*/}
-      {/* <div className="flex flex-row">
+        {/* <div className='text-xl tracking-wider text-gray-800 font-pacifico font-bold'>Weathery</div> */}
+      </div>
+      <div className="flex sm:flex-row flex-col">
         <input
           className="shadow-lg shadow-gray-600/50 rounded-xl transform lg:w-[40em] w-[80vw] p-4 lg:placeholder:text-xl"
           type="text"
           id="location"
           value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={(e) => changeLocation(e.target.value)}
           placeholder="Location (ie. Istanbul)"
         />
 
@@ -106,12 +111,13 @@ export default function Home() {
         >
           SEARCH
         </button>
-      </div> */}
-      {/* 
+      </div>
+
       <div>
         {weather? weather : <div>there is no place</div>}
-      </div>  */}
-      <LandingPage />
+      </div>
     </div>
   );
 }
+
+export default Landingpage;
