@@ -4,6 +4,7 @@ import Image from "next/image";
 import logo from "../public/sunny.png";
 import { useSelector, useDispatch } from "react-redux";
 import { setLocation } from "../reduxfolder/features/location-slice";
+import DetailPage from "./detailpage";
 
 function Landingpage() {
   const [location, changeLocation] = useState("");
@@ -12,7 +13,7 @@ function Landingpage() {
   const locationState = useSelector((state) => state.currentLocation);
   console.log("hey" + JSON.stringify(locationState));
 
-  const [weather, setWeather] = useState("");
+  const [cityWeather, setCityWeather] = useState("");
 
   const getWeather = async () => {
     const api_key = "c2a39762b03a45b397f51031230407";
@@ -43,47 +44,49 @@ function Landingpage() {
             condition: res.current.condition.text,
             img: imgURL,
           };
+          setCityWeather(api_data)
           // setWeather(api_data)
-          setWeather(
-            <>
-              <div className="text-center text-2xl p-2">{api_data.city}</div>
-              <div className="flex justify-center">
-                <div className="flow-root">
-                  <div className="float-left">
-                    <Image
-                      src={api_data.img}
-                      width="80"
-                      height="80"
-                      alt="Condition"
-                    />
-                  </div>
-                  <div className="float-left text-6xl degrees">
-                    {api_data.temp}
-                  </div>
-                </div>
-              </div>
-              <div className="text-center text-gray-600">
-                {api_data.condition}
-              </div>
-              <div className="flow-root p-2">
-                <div className="float-left text-gray-600">
-                  Humidity: {api_data.humidity} %
-                </div>
-                <div className="float-right text-gray-600">
-                  Wind: {api_data.wind} <span className="">mph</span>
-                </div>
-                <div className="float-left text-gray-600">
-                  Visibility: {api_data.visibility} mi
-                </div>
-                <div className="float-right text-gray-600">
-                  Gust: {api_data.gust} mph
-                </div>
-              </div>
-            </>
-          );
+          // setCityWeather(
+          //   <>
+          //     <div className="text-center text-2xl p-2">{api_data.city}</div>
+          //     <div className="flex justify-center">
+          //       <div className="flow-root">
+          //         <div className="float-left">
+          //           <Image
+          //             src={api_data.img}
+          //             width="80"
+          //             height="80"
+          //             alt="Condition"
+          //           />
+          //         </div>
+          //         <div className="float-left text-6xl degrees">
+          //           {api_data.temp}
+          //         </div>
+          //       </div>
+          //     </div>
+          //     <div className="text-center text-gray-600">
+          //       {api_data.condition}
+          //     </div>
+          //     <div className="flow-root p-2">
+          //       <div className="float-left text-gray-600">
+          //         Humidity: {api_data.humidity} %
+          //       </div>
+          //       <div className="float-right text-gray-600">
+          //         Wind: {api_data.wind} <span className="">mph</span>
+          //       </div>
+          //       <div className="float-left text-gray-600">
+          //         Visibility: {api_data.visibility} mi
+          //       </div>
+          //       <div className="float-right text-gray-600">
+          //         Gust: {api_data.gust} mph
+          //       </div>
+          //     </div>
+          //   </>
+          // );
           dispatch(setLocation(api_data));
         }
       } catch (err) {
+        alert("Please try again after you make sure you typed the place you want to search correctly.")
         console.log(err);
       }
     }
@@ -114,7 +117,8 @@ function Landingpage() {
       </div>
 
       <div>
-        {weather? weather : <div>there is no place</div>}
+      
+        {cityWeather? <DetailPage cityInfo={cityWeather}/> : <div>there is no place</div>}
       </div>
     </div>
   );
